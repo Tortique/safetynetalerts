@@ -5,35 +5,47 @@ import com.safetynet.safetynetalerts.model.Person;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.Iterator;
+import java.io.IOException;
 import java.util.List;
 
 @Data
 @Service
-public class PersonService {
+public class PersonService implements IPersonService {
 
     @Autowired
     private JSONReader jsonReader;
 
+    private List<Person> list;
+
+    public PersonService(JSONReader jsonReader) throws IOException {this.list = jsonReader.readPerson();}
+
     public List<Person> getPersons() {
-        return jsonReader.readPerson();
+        return list;
     }
 
-    public void deletePerson(String firstName, String lastName) {
-        List<Person> list = jsonReader.readPerson();
-        Iterator<Person> iterator = list.listIterator();
-        while (iterator.hasNext()) {
-            if (iterator.next().getFirstName().equals(firstName) && iterator.next().getLastName().equals(lastName) ) {
-                iterator.remove();
-                break;
+    public Result deletePerson(String firstName, String lastName) {
+        for(Person person : list) {
+            if(person.getFirstName().equals(firstName) && person.getLastName().equals(lastName)) {
+                list.remove(person);
+                return Result.success;
             }
         }
+        return Result.failure;
     }
 
     public Person savePerson(Person person) {
-        List<Person> list = jsonReader.readPerson();
         list.add(new Person(person.getFirstName(), person.getLastName(), person.getAddress(), person.getCity(), person.getZip(), person.getPhone(), person.getEmail()));
         return person;
+    }
+
+    public Result updatePerson(Person person, String firstName, String lastName) {
+        for(Person person1 : list) {
+            if(person.getFirstName().equals(firstName) && person.getLastName().equals(lastName)) {
+                int index = list.indexOf(person1);
+                list.set(index,person);
+                return Result.success;
+            }
+        }
+        return Result.failure;
     }
 }
