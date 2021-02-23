@@ -20,6 +20,10 @@ public class PhoneAndMedical {
         this.allergies = allergies;
     }
 
+    public PhoneAndMedical() {
+
+    }
+
     @Override
     public String toString() {
         return "PhoneAndMedical{" +

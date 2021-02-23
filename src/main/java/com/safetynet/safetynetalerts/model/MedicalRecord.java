@@ -25,6 +25,10 @@ public class MedicalRecord {
         this.allergies = allergies;
     }
 
+    public MedicalRecord() {
+
+    }
+
     @Override
     public String toString() {
         return "MedicalRecord{" +

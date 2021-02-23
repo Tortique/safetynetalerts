@@ -32,6 +32,10 @@ public class Person {
         this.email = email;
     }
 
+    public Person() {
+
+    }
+
     @Override
     public String toString() {
         return "Person{" +

@@ -12,6 +12,10 @@ public class Adult {
         this.lastName = lastName;
     }
 
+    public Adult() {
+
+    }
+
     @Override
     public String toString() {
         return "Adult{" +

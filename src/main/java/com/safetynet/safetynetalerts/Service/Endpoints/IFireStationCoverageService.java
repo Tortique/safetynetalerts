@@ -1,8 +1,10 @@
 package com.safetynet.safetynetalerts.Service.Endpoints;
 
-import java.text.ParseException;
+import com.safetynet.safetynetalerts.dto.FireCoverage;
+
 import java.util.List;
+import java.text.ParseException;
 
 public interface IFireStationCoverageService {
-    List<String> getFireStationCoverage(String station) throws ParseException;
+    List<FireCoverage> getFireStationCoverage(String station) throws ParseException;
 }

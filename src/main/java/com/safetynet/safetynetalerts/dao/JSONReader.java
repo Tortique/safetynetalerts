@@ -19,16 +19,18 @@ import java.util.Map;
 @Slf4j
 @Component
 public class JSONReader implements Reader {
-    private Any initRead() throws IOException {
-        String input = "src/main/resources/data.json";
-        byte[] bytesFile = Files.readAllBytes(new File(input).toPath());
-        JsonIterator iter = JsonIterator.parse(bytesFile);
-        Any any = iter.readAny();
-        return any;
+
+    String input = "src/main/resources/data.json";
+    byte[] bytesFile = Files.readAllBytes(new File(input).toPath());
+    JsonIterator iter = JsonIterator.parse(bytesFile);
+    Any any = iter.readAny();
+
+    public JSONReader() throws IOException {
     }
 
-    public List<Person> readPerson () throws IOException {
-        Any personAny = initRead().get("persons");
+
+    public List<Person> readPerson () {
+        Any personAny = any.get("persons");
         List<Person> persons = new ArrayList<>();
         for (Any person : personAny) {
             persons.add(new Person(person.get("firstName").toString(),person.get("lastName").toString(),person.get("address").toString(),person.get("city").toString(),
@@ -37,16 +39,16 @@ public class JSONReader implements Reader {
         return persons;
     }
 
-    public List<MedicalRecord> readMedicalRecord() throws IOException {
-        Any medicalAny = initRead().get("medicalrecords");
+    public List<MedicalRecord> readMedicalRecord() {
+        Any medicalAny = any.get("medicalrecords");
         List<MedicalRecord> medicalRecords = new ArrayList<>();
         medicalAny.forEach(medical -> medicalRecords.add(new MedicalRecord(medical.get("firstName").toString(),medical.get("lastName").toString(),
                 medical.get("birthdate").toString(), medical.get("medications").toString(), medical.get("allergies").toString())));
         return medicalRecords;
     }
 
-    public Map<String, FireStation> readFireStation() throws IOException {
-        Any fireStationAny = initRead().get("firestations");
+    public Map<String, FireStation> readFireStation() {
+        Any fireStationAny = any.get("firestations");
         Map<String, FireStation> fireStations = new HashMap<>();
         fireStationAny.forEach(station -> {
             fireStations.compute(station.get("station").toString(),

@@ -17,7 +17,9 @@ public class FireStationController {
     private FireStationService service;
 
     @GetMapping("/firestations")
-    public Map<String, FireStation> getfirestations() { return service.getFireStation();}
+    public Map<String, FireStation> getfirestations() {
+        return service.getFireStation();
+    }
 
     @DeleteMapping("/firestation/deleteAddress/{address}")
     public Result deleteAddressOfFireStation(@PathVariable("address") String address) {
@@ -35,7 +37,7 @@ public class FireStationController {
     }
 
     @PutMapping("/firestation/{station}/{address}")
-    public Result updateFireStationOfAddress(@PathVariable("station") String station,@PathVariable("address") String address,@RequestBody FireStation fireStation) {
-        return service.updateFireStationOfAddress(fireStation,station,address);
+    public Result updateFireStationOfAddress(@PathVariable("station") String station, @PathVariable("address") String address, @RequestBody FireStation fireStation) {
+        return service.updateFireStationOfAddress(fireStation, station, address);
     }
 }

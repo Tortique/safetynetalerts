@@ -14,6 +14,10 @@ public class EmailWithName {
         this.email = email;
     }
 
+    public EmailWithName() {
+
+    }
+
     public String toString() {
         return "EmailWithName{" +
                 "firstName='" + firstName + '\'' +

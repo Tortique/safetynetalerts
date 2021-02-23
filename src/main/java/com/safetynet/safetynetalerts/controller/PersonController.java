@@ -22,7 +22,7 @@ public class PersonController {
 
     @DeleteMapping("/persons/{firstName}/{lastName}")
     public Result deletePerson(@PathVariable("firstName") String firstName, @PathVariable("lastName") String lastName) {
-        return service.deletePerson(firstName,lastName);
+        return service.deletePerson(firstName, lastName);
     }
 
     @PostMapping("/person")
@@ -32,6 +32,6 @@ public class PersonController {
 
     @PutMapping("/persons/{firstName}/{lastName}")
     public Result updatePerson(@PathVariable("firstName") String firstName, @PathVariable("lastName") String lastName, @RequestBody Person person) {
-        return service.updatePerson(person,firstName,lastName);
+        return service.updatePerson(person, firstName, lastName);
     }
 }

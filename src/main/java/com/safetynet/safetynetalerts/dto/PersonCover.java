@@ -19,6 +19,10 @@ public class PersonCover {
         this.phone = phone;
     }
 
+    public PersonCover() {
+
+    }
+
     @Override
     public String toString() {
         return "PersonCover{" +

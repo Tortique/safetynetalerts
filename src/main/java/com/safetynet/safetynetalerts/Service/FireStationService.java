@@ -30,18 +30,18 @@ public class FireStationService implements IFireStationService {
     }
 
     public Result deleteAddressOfFireStation(String address) {
-       for(FireStation station : map.values()) {
-           if(station.getAddresses().contains(address)) {
-               map.remove(address);
-               return Result.success;
-           }
-       }
+        for (FireStation station : map.values()) {
+            if (station.getAddresses().contains(address)) {
+                map.remove(address);
+                return Result.success;
+            }
+        }
         return Result.failure;
     }
 
     public Result deleteFireStation(String station) {
-        for(String station1 : map.keySet()) {
-            if(station1.equals(station)) {
+        for (String station1 : map.keySet()) {
+            if (station1.equals(station)) {
                 map.remove(station);
                 return Result.success;
             }
@@ -51,15 +51,15 @@ public class FireStationService implements IFireStationService {
     }
 
     public FireStation saveFireStation(FireStation fireStation) {
-        map.put(fireStation.getStation(),fireStation.addAddress(fireStation.getAddress()));
+        map.put(fireStation.getStation(), fireStation.addAddress(fireStation.getAddress()));
         return fireStation;
     }
 
     public Result updateFireStationOfAddress(FireStation fireStation, String station, String address) {
-        for(FireStation fireStation1 :map.values()) {
-            if(fireStation1.getStation().equals(station)) {
-                map.remove(station,address);
-                map.put(fireStation.getStation(),fireStation);
+        for (FireStation fireStation1 : map.values()) {
+            if (fireStation1.getStation().equals(station)) {
+                map.remove(station, address);
+                map.put(fireStation.getStation(), fireStation);
                 return Result.success;
             }
         }

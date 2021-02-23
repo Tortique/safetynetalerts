@@ -2,6 +2,9 @@ package com.safetynet.safetynetalerts.controller.Endpoints;
 
 import com.safetynet.safetynetalerts.Service.Endpoints.FireService;
 import java.util.List;
+
+import com.safetynet.safetynetalerts.dto.PhoneAndMedical;
+import com.safetynet.safetynetalerts.dto.PhoneAndMedicalWithStation;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,7 +19,7 @@ public class FireController {
     FireService service;
 
     @GetMapping("/fire")
-    public List<String> getFire(@RequestParam String address) {
+    public List<PhoneAndMedicalWithStation> getFire(@RequestParam String address) {
         return service.getFire(address);
     }
 }

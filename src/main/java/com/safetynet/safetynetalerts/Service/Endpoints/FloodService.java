@@ -2,11 +2,16 @@ package com.safetynet.safetynetalerts.Service.Endpoints;
 
 import com.safetynet.safetynetalerts.Service.PersonAge;
 import com.safetynet.safetynetalerts.dao.JSONReader;
+import com.safetynet.safetynetalerts.dao.Reader;
 import com.safetynet.safetynetalerts.dto.PhoneAndMedical;
+import com.safetynet.safetynetalerts.dto.PhoneAndMedicalByAddress;
+import com.safetynet.safetynetalerts.dto.StationAndAddress;
 import com.safetynet.safetynetalerts.model.FireStation;
 import com.safetynet.safetynetalerts.model.MedicalRecord;
 import com.safetynet.safetynetalerts.model.Person;
 import lombok.Data;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,60 +21,74 @@ import java.util.stream.Collectors;
 
 @Data
 @Service
-public class FloodService implements IFloodService{
+public class FloodService implements IFloodService {
+    private static final Logger logger = LogManager.getLogger("FloodService");
 
     @Autowired
     JSONReader jsonReader;
 
-    @Autowired
-    PersonAge personAge;
+    PersonAge personAge = new PersonAge();
 
     private List<Person> listPerson;
     private Map<String, FireStation> map;
     private List<MedicalRecord> listMedical;
 
-    public FloodService(JSONReader jsonReader) throws IOException {
+    public FloodService(Reader jsonReader) throws IOException {
         this.listPerson = jsonReader.readPerson();
         this.listMedical = jsonReader.readMedicalRecord();
         this.map = jsonReader.readFireStation();
     }
 
-    public Map<String, Map<String,List<PhoneAndMedical>>> getFlood(List<String> stations) {
-        Map<String, Map<String,List<PhoneAndMedical>>> getFlood = new HashMap<>();
-
-        Map<String,List<PhoneAndMedical>> getPeople = new HashMap<>();
-
-        for(String station : stations) {
-           List<String> addresses = new ArrayList<>(map.get(station).getAddresses());
-            for(String address : addresses) {
-                getPeople.put(address,getPhoneAndMedical(address));
+    public List<StationAndAddress> getFlood(List<String> stations) {
+        try {
+            logger.debug("Entering getFlood");
+            List<StationAndAddress> getFlood = stations.stream().map(station ->
+            {
+                try {
+                    logger.debug("Create List of Addresses");
+                    StationAndAddress stationAndAddress = new StationAndAddress();
+                    stationAndAddress.setStation(station);
+                    stationAndAddress.setAddress(
+                            map.get(station).getAddresses().stream()
+                                    .map(address ->
+                                    {
+                                        try {
+                                            logger.debug("Create List of Person by Address");
+                                            PhoneAndMedicalByAddress phoneAndMedicalByAddress = new PhoneAndMedicalByAddress();
+                                            phoneAndMedicalByAddress.setAddress(address);
+                                            phoneAndMedicalByAddress.setPhoneAndMedicalList(listPerson.stream().filter(person -> person.getAddress().contains(address))
+                                                    .flatMap(person -> listMedical.stream()
+                                                            .filter(medicalRecord -> medicalRecord.getFirstName().contains(person.getFirstName()) && medicalRecord.getLastName().contains(person.getLastName()))
+                                                            .map(personAndMedical ->
+                                                            {
+                                                                PhoneAndMedical phoneAndMedical = new PhoneAndMedical();
+                                                                phoneAndMedical.setFirstName(personAndMedical.getFirstName());
+                                                                phoneAndMedical.setLastName(personAndMedical.getLastName());
+                                                                phoneAndMedical.setPhone(person.getPhone());
+                                                                phoneAndMedical.setAge(String.valueOf(personAge.getPersonAge(personAndMedical.getBirthDate())));
+                                                                phoneAndMedical.setMedications(personAndMedical.getMedications());
+                                                                phoneAndMedical.setAllergies(personAndMedical.getAllergies());
+                                                                return phoneAndMedical;
+                                                            })).collect(Collectors.toList()));
+                                            logger.debug("Success List of Person");
+                                            return phoneAndMedicalByAddress;
+                                        } catch (Exception e) {
+                                            logger.error("Error finding person data");
+                                            throw e;
+                                        }
+                                    }).collect(Collectors.toList()));
+                    logger.debug("Success List of Address");
+                    return stationAndAddress;
+                } catch (Exception e) {
+                    logger.error("Error finding address");
+                    throw e;
                 }
-            getFlood.put(station, getPeople);
-            }
-
-        return getFlood;
-    }
-
-    private List<PhoneAndMedical> getPhoneAndMedical(String address) {
-        List<Person> inhabitants = listPerson.stream().filter(person -> person.getAddress().contains(address)).collect(Collectors.toList());
-        List<MedicalRecord> medicalRecords = listMedical.stream()
-                .filter(medicalRecord -> inhabitants.stream()
-                        .anyMatch(person -> medicalRecord.getFirstName().contains(person.getFirstName()) && medicalRecord.getLastName().contains(person.getLastName()))).collect(Collectors.toList());
-        for(MedicalRecord medicalRecord : medicalRecords) {
-            String age = String.valueOf(personAge.getPersonAge(medicalRecord.getBirthDate()));
-            medicalRecord.setBirthDate(age);
+            }).collect(Collectors.toList());
+            logger.info("Flood data find successfully");
+            return getFlood;
+        } catch (Exception e) {
+            logger.error("Error finding data", e);
+            throw e;
         }
-        List<PhoneAndMedical> phoneAndMedicals = new ArrayList<>();
-        for(MedicalRecord medicalRecord : medicalRecords) {
-            String getPhoneNumber =  inhabitants.stream().filter(person -> person.getFirstName().contains(medicalRecord.getFirstName()) && person.getLastName().contains(medicalRecord.getLastName()))
-                    .map(Person::getPhone).findFirst().get();
-            phoneAndMedicals.add(new PhoneAndMedical(medicalRecord.getFirstName(),
-                    medicalRecord.getLastName(),
-                    getPhoneNumber,
-                    medicalRecord.getBirthDate(),
-                    medicalRecord.getMedications(),
-                    medicalRecord.getAllergies()));
-        }
-        return phoneAndMedicals;
     }
 }

@@ -1,9 +1,10 @@
 package com.safetynet.safetynetalerts.controller.Endpoints;
 
+
 import com.safetynet.safetynetalerts.Service.Endpoints.FireStationCoverageService;
+import com.safetynet.safetynetalerts.dto.FireCoverage;
 import lombok.Data;
 
-import java.text.ParseException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,8 +18,8 @@ public class FireStationCoverageController {
     @Autowired
     FireStationCoverageService service;
 
-    @GetMapping("/firestaion")
-    public List<String> getFireStationCoverage(@RequestParam String station ) {
-        return service.getFireStationCoverage(station);
+    @GetMapping("/firestation")
+    public List<FireCoverage> getFireStationCoverage(@RequestParam String stationNumber ) {
+        return service.getFireStationCoverage(stationNumber);
     }
 }

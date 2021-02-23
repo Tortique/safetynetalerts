@@ -14,6 +14,11 @@ public class Child {
         this.age = age;
     }
 
+    public Child() {
+
+    }
+
+
     @Override
     public String toString() {
         return "Child{" +

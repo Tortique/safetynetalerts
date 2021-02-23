@@ -19,6 +19,10 @@ public class FireStation {
         this.station = station;
     }
 
+    public FireStation() {
+
+    }
+
     public FireStation addAddress (String address) {
         addresses.add(address);
         return this;

@@ -3,6 +3,7 @@ package com.safetynet.safetynetalerts.controller.Endpoints;
 import com.safetynet.safetynetalerts.Service.Endpoints.ChildAlertService;
 import com.safetynet.safetynetalerts.dto.Adult;
 import com.safetynet.safetynetalerts.dto.Child;
+import com.safetynet.safetynetalerts.dto.ChildrenAndAdults;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,7 +21,7 @@ public class ChildAlertController {
     ChildAlertService service;
 
     @GetMapping("/childAlert")
-    public Map<List<Child>, List<Adult>> getChildAlert(@RequestParam String address) {
+    public List<ChildrenAndAdults> getChildAlert(@RequestParam String address) {
         return service.getChildAlert(address);
     }
 

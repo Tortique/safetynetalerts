@@ -22,6 +22,10 @@ public class PersonInfo {
         this.allergies = allergies;
     }
 
+    public PersonInfo() {
+
+    }
+
     @Override
     public String toString() {
         return "PersonInfo{" +
