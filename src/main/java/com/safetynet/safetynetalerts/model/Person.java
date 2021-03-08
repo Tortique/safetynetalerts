@@ -22,8 +22,8 @@ public class Person {
 
     private String email;
 
-    public Person (String firstName, String lastName, String address, String city, String zip, String phone, String email) {
-        this.firstName= firstName;
+    public Person(String firstName, String lastName, String address, String city, String zip, String phone, String email) {
+        this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
         this.city = city;
@@ -32,16 +32,7 @@ public class Person {
         this.email = email;
     }
 
-    @Override
-    public String toString() {
-        return "Person{" +
-                "firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", address='" + address + '\'' +
-                ", city='" + city + '\'' +
-                ", zip='" + zip + '\'' +
-                ", phone='" + phone + '\'' +
-                ", email='" + email + '\'' +
-                '}';
+    public Person() {
+
     }
 }

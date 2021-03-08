@@ -10,6 +10,8 @@ import java.util.Map;
 
 public interface Reader {
     List<Person> readPerson() throws IOException;
+
     List<MedicalRecord> readMedicalRecord() throws IOException;
-    Map<String,FireStation> readFireStation() throws IOException;
+
+    Map<String, FireStation> readFireStation() throws IOException;
 }
