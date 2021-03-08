@@ -17,12 +17,4 @@ public class StationAndAddress {
         this.station = station;
         this.address = address;
     }
-
-    @Override
-    public String toString() {
-        return "StationAndAddress{" +
-                "station='" + station + '\'' +
-                ", address=" + address +
-                '}';
-    }
 }

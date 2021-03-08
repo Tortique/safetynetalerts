@@ -10,7 +10,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-
+/**
+ * Controller mapping GET for PhoneAlertService and PhoneAlert endpoint
+ */
 @Data
 @RestController
 public class PhoneAlertController {

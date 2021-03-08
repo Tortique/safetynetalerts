@@ -7,7 +7,9 @@ import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-
+/**
+ * Controller mapping CRUD for PersonService
+ */
 @Data
 @RestController
 public class PersonController {

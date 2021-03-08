@@ -16,12 +16,4 @@ public class FireCoverage {
         this.numberOfChildren = numberOfChildren;
     }
 
-    @Override
-    public String toString() {
-        return "FireCoverage{" +
-                "personCoverList=" + personCoverList +
-                ", numberOfAdults='" + numberOfAdults + '\'' +
-                ", numberOfChildren='" + numberOfChildren + '\'' +
-                '}';
-    }
 }

@@ -15,6 +15,9 @@ import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * Service that allows to get a person's list with their name and phone number, from specified station.
+ */
 @Data
 @Service
 public class PhoneAlertService implements IPhoneAlertService {
@@ -32,24 +35,19 @@ public class PhoneAlertService implements IPhoneAlertService {
     }
 
     public List<PhoneWithName> getPhoneAlert(String station) {
-        try {
-            logger.debug("Entering getPhoneAlert");
-            List<PhoneWithName> listPhone = map.get(station).getAddresses().stream()
-                    .flatMap(address -> listPerson.stream()
-                            .filter(person -> person.getAddress().contains(address))
-                            .map(phoneWithName ->
-                            {
-                                PhoneWithName phoneWithName1 = new PhoneWithName();
-                                phoneWithName1.setFirstName(phoneWithName.getFirstName());
-                                phoneWithName1.setLastName(phoneWithName.getLastName());
-                                phoneWithName1.setPhone(phoneWithName.getPhone());
-                                return phoneWithName1;
-                            })).collect(Collectors.toList());
-            logger.info("Phone data find successfully");
-            return listPhone;
-        } catch (Exception e) {
-            logger.error("Error finding phone data", e);
-            throw e;
-        }
+        logger.debug("Entering getPhoneAlert");
+        List<PhoneWithName> listPhone = map.get(station).getAddresses().stream()
+                .flatMap(address -> listPerson.stream()
+                        .filter(person -> person.getAddress().contains(address))
+                        .map(phoneWithName ->
+                        {
+                            PhoneWithName phoneWithName1 = new PhoneWithName();
+                            phoneWithName1.setFirstName(phoneWithName.getFirstName());
+                            phoneWithName1.setLastName(phoneWithName.getLastName());
+                            phoneWithName1.setPhone(phoneWithName.getPhone());
+                            return phoneWithName1;
+                        })).collect(Collectors.toList());
+        logger.info("Phone data find successfully");
+        return listPhone;
     }
 }

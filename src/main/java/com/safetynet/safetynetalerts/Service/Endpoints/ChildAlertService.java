@@ -20,6 +20,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * Service that allows to get a child's list with adults linked, who lived in specified address.
+ */
 @Data
 @Service
 public class ChildAlertService implements IChildAlertService {
@@ -39,39 +42,34 @@ public class ChildAlertService implements IChildAlertService {
     }
 
     public List<ChildrenAndAdults> getChildAlert(String address) {
-        try {
-            logger.debug("Entering getChildAlert");
-            Map<Boolean, List<MedicalRecord>> booleanListMap = listPerson.stream().filter(person -> person.getAddress().contains(address))
-                    .flatMap(medicalRecord -> listMedical.stream()
-                            .filter(person -> person.getFirstName().contains(medicalRecord.getFirstName()) && person.getLastName().contains(medicalRecord.getLastName())))
-                    .collect(Collectors.partitioningBy(person -> personAge.getPersonAge(person.getBirthDate()) <= 18));
-            logger.debug("Create ChildrenList");
-            List<Child> childList = booleanListMap.get(true).stream().map(child ->
-            {
-                Child child1 = new Child();
-                child1.setFirstName(child.getFirstName());
-                child1.setLastName(child.getLastName());
-                child1.setAge(personAge.getPersonAge(child.getBirthDate()));
-                return child1;
-            }).collect(Collectors.toList());
-            logger.debug("Create AdultsList");
-            List<Adult> adultList = booleanListMap.get(false).stream().map(adult ->
-            {
-                Adult adult1 = new Adult();
-                adult1.setFirstName(adult.getFirstName());
-                adult1.setLastName(adult.getLastName());
-                return adult1;
-            }).collect(Collectors.toList());
-            logger.debug("Success create List");
-            List<ChildrenAndAdults> getChildAlert = new ArrayList<>();
-            getChildAlert.add(new ChildrenAndAdults(childList, adultList));
+        logger.debug("Entering getChildAlert");
+        Map<Boolean, List<MedicalRecord>> booleanListMap = listPerson.stream().filter(person -> person.getAddress().contains(address))
+                .flatMap(medicalRecord -> listMedical.stream()
+                        .filter(person -> person.getFirstName().contains(medicalRecord.getFirstName()) && person.getLastName().contains(medicalRecord.getLastName())))
+                .collect(Collectors.partitioningBy(person -> personAge.getPersonAge(person.getBirthDate()) <= 18));
+        logger.debug("Create ChildrenList");
+        List<Child> childList = booleanListMap.get(true).stream().map(child ->
+        {
+            Child child1 = new Child();
+            child1.setFirstName(child.getFirstName());
+            child1.setLastName(child.getLastName());
+            child1.setAge(personAge.getPersonAge(child.getBirthDate()));
+            return child1;
+        }).collect(Collectors.toList());
+        logger.debug("Create AdultsList");
+        List<Adult> adultList = booleanListMap.get(false).stream().map(adult ->
+        {
+            Adult adult1 = new Adult();
+            adult1.setFirstName(adult.getFirstName());
+            adult1.setLastName(adult.getLastName());
+            return adult1;
+        }).collect(Collectors.toList());
+        logger.debug("Success create List");
+        List<ChildrenAndAdults> getChildAlert = new ArrayList<>();
+        getChildAlert.add(new ChildrenAndAdults(childList, adultList));
 
-            logger.info("Children and Adults find successfully");
-            return getChildAlert;
-        } catch (Exception e) {
-            logger.error("Error finding Children data");
-            throw e;
-        }
+        logger.info("Children and Adults find successfully");
+        return getChildAlert;
     }
 }
 

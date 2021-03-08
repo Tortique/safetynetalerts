@@ -6,6 +6,9 @@ import java.time.LocalDate;
 import java.time.Period;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Convert birthdate (in String) to age (in int).
+ */
 @Component
 public class PersonAge {
     public int getPersonAge(String birthDate) {

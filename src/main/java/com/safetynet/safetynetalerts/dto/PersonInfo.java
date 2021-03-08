@@ -12,7 +12,7 @@ public class PersonInfo {
     private String medications;
     private String allergies;
 
-    public PersonInfo (String firstName, String lastName, String address, String age,String email, String medications, String allergies) {
+    public PersonInfo(String firstName, String lastName, String address, String age, String email, String medications, String allergies) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.address = address;
@@ -24,18 +24,5 @@ public class PersonInfo {
 
     public PersonInfo() {
 
-    }
-
-    @Override
-    public String toString() {
-        return "PersonInfo{" +
-                "firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", address='" + address + '\'' +
-                ", age='" + age + '\'' +
-                ", email='" + email + '\'' +
-                ", medications='" + medications + '\'' +
-                ", allergies='" + allergies + '\'' +
-                '}';
     }
 }

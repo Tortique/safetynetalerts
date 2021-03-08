@@ -20,16 +20,6 @@ public class PersonCover {
     }
 
     public PersonCover() {
-
     }
 
-    @Override
-    public String toString() {
-        return "PersonCover{" +
-                "firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", address='" + address + '\'' +
-                ", phone='" + phone + '\'' +
-                '}';
-    }
 }

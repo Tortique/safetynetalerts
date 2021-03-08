@@ -17,12 +17,4 @@ public class EmailWithName {
     public EmailWithName() {
 
     }
-
-    public String toString() {
-        return "EmailWithName{" +
-                "firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", email='" + email + '\'' +
-                '}';
-    }
 }

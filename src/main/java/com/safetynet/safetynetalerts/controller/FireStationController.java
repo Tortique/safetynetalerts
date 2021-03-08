@@ -9,6 +9,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
+/**
+ * Controller mapping CRUD for FireStationService
+ */
 @Data
 @RestController
 public class FireStationController {
@@ -17,7 +20,7 @@ public class FireStationController {
     private FireStationService service;
 
     @GetMapping("/firestations")
-    public Map<String, FireStation> getfirestations() {
+    public Map<String, FireStation> getFireStation() {
         return service.getFireStation();
     }
 

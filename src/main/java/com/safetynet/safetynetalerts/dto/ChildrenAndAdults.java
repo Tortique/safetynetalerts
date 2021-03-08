@@ -13,12 +13,4 @@ public class ChildrenAndAdults {
         this.childList = childList;
         this.adultList = adultList;
     }
-
-    @Override
-    public String toString() {
-        return "ChildrenAndAdults{" +
-                "childList=" + childList +
-                ", adultList=" + adultList +
-                '}';
-    }
 }

@@ -15,7 +15,7 @@ public class FireStation {
     private String address;
     private String station;
 
-    public FireStation (String station) {
+    public FireStation(String station) {
         this.station = station;
     }
 
@@ -23,20 +23,12 @@ public class FireStation {
 
     }
 
-    public FireStation addAddress (String address) {
+    public FireStation addAddress(String address) {
         addresses.add(address);
         return this;
     }
 
     public Set<String> getAddresses() {
         return addresses.stream().collect(Collectors.toSet());
-    }
-
-    @Override
-    public String toString() {
-        return "FireStation{" +
-                "addresses=" + addresses +
-                ", station='" + station + '\'' +
-                '}';
     }
 }

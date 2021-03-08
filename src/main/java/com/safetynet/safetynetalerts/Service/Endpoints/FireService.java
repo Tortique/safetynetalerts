@@ -20,6 +20,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+/**
+ * Service that allows to get a Medical Record's list with phone number from person who lived in specified address.
+ */
 @Data
 @Service
 public class FireService implements IFireService {
@@ -41,32 +44,27 @@ public class FireService implements IFireService {
     }
 
     public List<PhoneAndMedicalWithStation> getFire(String address) {
-        try {
-            logger.debug("Entering getFire");
-            List<PhoneAndMedical> getPhoneAndMedicalList = listPerson.stream().filter(person -> person.getAddress().contains(address))
-                    .flatMap(medicalRecord -> listMedical.stream()
-                            .filter(person -> person.getFirstName().contains(medicalRecord.getFirstName()) && person.getLastName().contains(medicalRecord.getLastName()))
-                            .map(personAndMedical ->
-                            {
-                                PhoneAndMedical phoneAndMedical = new PhoneAndMedical();
-                                phoneAndMedical.setFirstName(personAndMedical.getFirstName());
-                                phoneAndMedical.setLastName(personAndMedical.getLastName());
-                                phoneAndMedical.setPhone(medicalRecord.getPhone());
-                                phoneAndMedical.setAge(String.valueOf(personAge.getPersonAge(personAndMedical.getBirthDate())));
-                                phoneAndMedical.setMedications(personAndMedical.getMedications());
-                                phoneAndMedical.setAllergies(personAndMedical.getAllergies());
-                                return phoneAndMedical;
-                            })).collect(Collectors.toList());
-            logger.debug("Add numberStation to the list");
-            List<PhoneAndMedicalWithStation> getFire = new ArrayList<>();
-            String getStation = map.entrySet().stream().filter(entry -> entry.getValue().getAddresses().contains(address)).map(Map.Entry::getKey).findFirst().get();
-            getFire.add(new PhoneAndMedicalWithStation(getPhoneAndMedicalList, getStation));
+        logger.debug("Entering getFire");
+        List<PhoneAndMedical> getPhoneAndMedicalList = listPerson.stream().filter(person -> person.getAddress().contains(address))
+                .flatMap(medicalRecord -> listMedical.stream()
+                        .filter(person -> person.getFirstName().contains(medicalRecord.getFirstName()) && person.getLastName().contains(medicalRecord.getLastName()))
+                        .map(personAndMedical ->
+                        {
+                            PhoneAndMedical phoneAndMedical = new PhoneAndMedical();
+                            phoneAndMedical.setFirstName(personAndMedical.getFirstName());
+                            phoneAndMedical.setLastName(personAndMedical.getLastName());
+                            phoneAndMedical.setPhone(medicalRecord.getPhone());
+                            phoneAndMedical.setAge(String.valueOf(personAge.getPersonAge(personAndMedical.getBirthDate())));
+                            phoneAndMedical.setMedications(personAndMedical.getMedications());
+                            phoneAndMedical.setAllergies(personAndMedical.getAllergies());
+                            return phoneAndMedical;
+                        })).collect(Collectors.toList());
+        logger.debug("Add numberStation to the list");
+        List<PhoneAndMedicalWithStation> getFire = new ArrayList<>();
+        String getStation = map.entrySet().stream().filter(entry -> entry.getValue().getAddresses().contains(address)).map(Map.Entry::getKey).findFirst().get();
+        getFire.add(new PhoneAndMedicalWithStation(getPhoneAndMedicalList, getStation));
 
-            logger.info("Fire info find successfully");
-            return getFire;
-        } catch (Exception e) {
-            logger.error("Error finding Fire data");
-            throw e;
-        }
+        logger.info("Fire info find successfully");
+        return getFire;
     }
 }

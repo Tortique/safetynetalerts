@@ -19,6 +19,9 @@ import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
+/**
+ * Service that allows to get a fire station's list with address's list that contains person's info of inhabitant, from list of specified fire station.
+ */
 @Data
 @Service
 public class FloodService implements IFloodService {
@@ -40,55 +43,40 @@ public class FloodService implements IFloodService {
     }
 
     public List<StationAndAddress> getFlood(List<String> stations) {
-        try {
-            logger.debug("Entering getFlood");
-            List<StationAndAddress> getFlood = stations.stream().map(station ->
-            {
-                try {
-                    logger.debug("Create List of Addresses");
-                    StationAndAddress stationAndAddress = new StationAndAddress();
-                    stationAndAddress.setStation(station);
-                    stationAndAddress.setAddress(
-                            map.get(station).getAddresses().stream()
-                                    .map(address ->
-                                    {
-                                        try {
-                                            logger.debug("Create List of Person by Address");
-                                            PhoneAndMedicalByAddress phoneAndMedicalByAddress = new PhoneAndMedicalByAddress();
-                                            phoneAndMedicalByAddress.setAddress(address);
-                                            phoneAndMedicalByAddress.setPhoneAndMedicalList(listPerson.stream().filter(person -> person.getAddress().contains(address))
-                                                    .flatMap(person -> listMedical.stream()
-                                                            .filter(medicalRecord -> medicalRecord.getFirstName().contains(person.getFirstName()) && medicalRecord.getLastName().contains(person.getLastName()))
-                                                            .map(personAndMedical ->
-                                                            {
-                                                                PhoneAndMedical phoneAndMedical = new PhoneAndMedical();
-                                                                phoneAndMedical.setFirstName(personAndMedical.getFirstName());
-                                                                phoneAndMedical.setLastName(personAndMedical.getLastName());
-                                                                phoneAndMedical.setPhone(person.getPhone());
-                                                                phoneAndMedical.setAge(String.valueOf(personAge.getPersonAge(personAndMedical.getBirthDate())));
-                                                                phoneAndMedical.setMedications(personAndMedical.getMedications());
-                                                                phoneAndMedical.setAllergies(personAndMedical.getAllergies());
-                                                                return phoneAndMedical;
-                                                            })).collect(Collectors.toList()));
-                                            logger.debug("Success List of Person");
-                                            return phoneAndMedicalByAddress;
-                                        } catch (Exception e) {
-                                            logger.error("Error finding person data");
-                                            throw e;
-                                        }
-                                    }).collect(Collectors.toList()));
-                    logger.debug("Success List of Address");
-                    return stationAndAddress;
-                } catch (Exception e) {
-                    logger.error("Error finding address");
-                    throw e;
-                }
-            }).collect(Collectors.toList());
-            logger.info("Flood data find successfully");
-            return getFlood;
-        } catch (Exception e) {
-            logger.error("Error finding data", e);
-            throw e;
-        }
+        logger.debug("Entering getFlood");
+        List<StationAndAddress> getFlood = stations.stream().map(station ->
+        {
+            logger.debug("Create List of Addresses");
+            StationAndAddress stationAndAddress = new StationAndAddress();
+            stationAndAddress.setStation(station);
+            stationAndAddress.setAddress(
+                    map.get(station).getAddresses().stream()
+                            .map(address ->
+                            {
+                                logger.debug("Create List of Person by Address");
+                                PhoneAndMedicalByAddress phoneAndMedicalByAddress = new PhoneAndMedicalByAddress();
+                                phoneAndMedicalByAddress.setAddress(address);
+                                phoneAndMedicalByAddress.setPhoneAndMedicalList(listPerson.stream().filter(person -> person.getAddress().contains(address))
+                                        .flatMap(person -> listMedical.stream()
+                                                .filter(medicalRecord -> medicalRecord.getFirstName().contains(person.getFirstName()) && medicalRecord.getLastName().contains(person.getLastName()))
+                                                .map(personAndMedical ->
+                                                {
+                                                    PhoneAndMedical phoneAndMedical = new PhoneAndMedical();
+                                                    phoneAndMedical.setFirstName(personAndMedical.getFirstName());
+                                                    phoneAndMedical.setLastName(personAndMedical.getLastName());
+                                                    phoneAndMedical.setPhone(person.getPhone());
+                                                    phoneAndMedical.setAge(String.valueOf(personAge.getPersonAge(personAndMedical.getBirthDate())));
+                                                    phoneAndMedical.setMedications(personAndMedical.getMedications());
+                                                    phoneAndMedical.setAllergies(personAndMedical.getAllergies());
+                                                    return phoneAndMedical;
+                                                })).collect(Collectors.toList()));
+                                logger.debug("Success List of Person");
+                                return phoneAndMedicalByAddress;
+                            }).collect(Collectors.toList()));
+            logger.debug("Success List of Address");
+            return stationAndAddress;
+        }).collect(Collectors.toList());
+        logger.info("Flood data find successfully");
+        return getFlood;
     }
 }

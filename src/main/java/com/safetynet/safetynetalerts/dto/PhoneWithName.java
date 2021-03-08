@@ -17,13 +17,4 @@ public class PhoneWithName {
     public PhoneWithName() {
 
     }
-
-    @Override
-    public String toString() {
-        return "PhoneWithName{" +
-                "firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", phone='" + phone + '\'' +
-                '}';
-    }
 }

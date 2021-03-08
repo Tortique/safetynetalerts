@@ -15,16 +15,5 @@ public class Child {
     }
 
     public Child() {
-
-    }
-
-
-    @Override
-    public String toString() {
-        return "Child{" +
-                "firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", age=" + age +
-                '}';
     }
 }

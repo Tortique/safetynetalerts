@@ -14,12 +14,4 @@ public class PhoneAndMedicalWithStation {
         this.phoneAndMedicalList = phoneAndMedicalList;
         this.station = station;
     }
-
-    @Override
-    public String toString() {
-        return "PhoneAndMedicalWithStation{" +
-                "phoneAndMedicalList=" + phoneAndMedicalList +
-                ", station='" + station + '\'' +
-                '}';
-    }
 }

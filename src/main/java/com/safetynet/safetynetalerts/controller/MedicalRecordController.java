@@ -7,8 +7,9 @@ import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
-
+/**
+ * Controller mapping CRUD for MedicalRecordService
+ */
 @Data
 @RestController
 public class MedicalRecordController {

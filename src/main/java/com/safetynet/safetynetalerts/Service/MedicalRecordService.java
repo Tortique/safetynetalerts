@@ -14,6 +14,9 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 
+/**
+ * Service that allows to get a Medical Record's list from jsonfile, to add, delete and update this list.
+ */
 @Data
 @Service
 public class MedicalRecordService implements IMedicalRecordService {

@@ -23,16 +23,4 @@ public class PhoneAndMedical {
     public PhoneAndMedical() {
 
     }
-
-    @Override
-    public String toString() {
-        return "PhoneAndMedical{" +
-                "firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", phone='" + phone + '\'' +
-                ", age=" + age +
-                ", medications='" + medications + '\'' +
-                ", allergies='" + allergies + '\'' +
-                '}';
-    }
 }

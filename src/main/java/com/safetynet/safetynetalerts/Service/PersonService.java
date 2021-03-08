@@ -10,6 +10,9 @@ import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * Service that allows to get a person's list from jsonfile, to add, delete and update this list.
+ */
 @Data
 @Service
 public class PersonService implements IPersonService {

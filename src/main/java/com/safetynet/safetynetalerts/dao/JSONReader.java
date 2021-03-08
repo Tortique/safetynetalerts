@@ -16,6 +16,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Read and create list of persons, fire stations and medical records from data.json
+ */
 @Slf4j
 @Component
 public class JSONReader implements Reader {
@@ -29,12 +32,12 @@ public class JSONReader implements Reader {
     }
 
 
-    public List<Person> readPerson () {
+    public List<Person> readPerson() {
         Any personAny = any.get("persons");
         List<Person> persons = new ArrayList<>();
         for (Any person : personAny) {
-            persons.add(new Person(person.get("firstName").toString(),person.get("lastName").toString(),person.get("address").toString(),person.get("city").toString(),
-                    person.get("zip").toString(),person.get("phone").toString(),person.get("email").toString()));
+            persons.add(new Person(person.get("firstName").toString(), person.get("lastName").toString(), person.get("address").toString(), person.get("city").toString(),
+                    person.get("zip").toString(), person.get("phone").toString(), person.get("email").toString()));
         }
         return persons;
     }
@@ -42,7 +45,7 @@ public class JSONReader implements Reader {
     public List<MedicalRecord> readMedicalRecord() {
         Any medicalAny = any.get("medicalrecords");
         List<MedicalRecord> medicalRecords = new ArrayList<>();
-        medicalAny.forEach(medical -> medicalRecords.add(new MedicalRecord(medical.get("firstName").toString(),medical.get("lastName").toString(),
+        medicalAny.forEach(medical -> medicalRecords.add(new MedicalRecord(medical.get("firstName").toString(), medical.get("lastName").toString(),
                 medical.get("birthdate").toString(), medical.get("medications").toString(), medical.get("allergies").toString())));
         return medicalRecords;
     }

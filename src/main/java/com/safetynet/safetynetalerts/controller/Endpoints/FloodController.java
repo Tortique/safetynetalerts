@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ * Controller mapping GET for FloodService and Flood endpoint
+ */
 @Data
 @RestController
 public class FloodController {
