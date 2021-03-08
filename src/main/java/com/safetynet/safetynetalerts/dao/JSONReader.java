@@ -31,7 +31,6 @@ public class JSONReader implements Reader {
     public JSONReader() throws IOException {
     }
 
-
     public List<Person> readPerson() {
         Any personAny = any.get("persons");
         List<Person> persons = new ArrayList<>();
@@ -53,12 +52,11 @@ public class JSONReader implements Reader {
     public Map<String, FireStation> readFireStation() {
         Any fireStationAny = any.get("firestations");
         Map<String, FireStation> fireStations = new HashMap<>();
-        fireStationAny.forEach(station -> {
-            fireStations.compute(station.get("station").toString(),
-                    (k, v) -> v == null ?
-                            new FireStation(station.get("station").toString()).addAddress(station.get("address").toString()) :
-                            v.addAddress(station.get("address").toString()));
-        });
+        fireStationAny.forEach(station -> fireStations.compute(station.get("station").toString(),
+                (k, v) -> v == null ?
+                        new FireStation(station.get("station").toString()).addAddress(station.get("address").toString()) :
+                        v.addAddress(station.get("address").toString())));
         return fireStations;
     }
+
 }
