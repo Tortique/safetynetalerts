@@ -5,11 +5,8 @@ import lombok.Data;
 @Data
 public class PersonCover {
     private String firstName;
-
     private String lastName;
-
     private String address;
-
     private String phone;
 
     public PersonCover(String firstName, String lastName, String address, String phone) {
@@ -19,7 +16,5 @@ public class PersonCover {
         this.phone = phone;
     }
 
-    public PersonCover() {
-    }
-
+    public PersonCover() {}
 }

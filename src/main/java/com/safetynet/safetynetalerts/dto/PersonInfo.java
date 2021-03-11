@@ -22,7 +22,5 @@ public class PersonInfo {
         this.allergies = allergies;
     }
 
-    public PersonInfo() {
-
-    }
+    public PersonInfo() {}
 }

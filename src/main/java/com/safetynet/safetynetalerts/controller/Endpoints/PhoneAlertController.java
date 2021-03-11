@@ -23,5 +23,4 @@ public class PhoneAlertController {
     public List<PhoneWithName> getPhoneAlert(@RequestParam String firestation) {
         return service.getPhoneAlert(firestation);
     }
-
 }

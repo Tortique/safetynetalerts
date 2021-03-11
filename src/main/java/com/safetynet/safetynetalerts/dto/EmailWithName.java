@@ -14,7 +14,5 @@ public class EmailWithName {
         this.email = email;
     }
 
-    public EmailWithName() {
-
-    }
+    public EmailWithName() {}
 }

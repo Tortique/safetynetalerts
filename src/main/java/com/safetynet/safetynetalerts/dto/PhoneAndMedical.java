@@ -20,7 +20,5 @@ public class PhoneAndMedical {
         this.allergies = allergies;
     }
 
-    public PhoneAndMedical() {
-
-    }
+    public PhoneAndMedical() {}
 }

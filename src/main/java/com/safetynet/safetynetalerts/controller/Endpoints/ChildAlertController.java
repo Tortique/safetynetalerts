@@ -24,5 +24,4 @@ public class ChildAlertController {
     public List<ChildrenAndAdults> getChildAlert(@RequestParam String address) {
         return service.getChildAlert(address);
     }
-
 }

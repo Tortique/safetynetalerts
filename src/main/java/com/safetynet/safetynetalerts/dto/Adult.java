@@ -12,7 +12,5 @@ public class Adult {
         this.lastName = lastName;
     }
 
-    public Adult() {
-
-    }
+    public Adult() {}
 }
